@@ -2,15 +2,16 @@
     "name": "Oslo Development Environment",
     "dockerFile": "Dockerfile",
     "runArgs": [
-        "-v",
-        "/var/run/docker.sock:/var/run/docker.sock"
+        "-v", "/var/run/docker.sock:/var/run/docker.sock"
     ],
     "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "workbench.iconTheme": "vscode-icons"
     },
     "extensions": [
         "ms-vscode.csharp",
         "ms-azuretools.vscode-docker",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "vscode-icons"
     ]
 }
