@@ -1,0 +1,6 @@
+bin/
+obj/
+node_modules/
+Properties/
+
+package-lock.json
