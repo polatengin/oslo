@@ -89,5 +89,9 @@ INGRESS=`kubectl get ingress --namespace=${PROJECT_NAME} --output=json | jq -r '
 
 if [ "$INGRESS" == '' ]
 then
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml
+fi
+
   kubectl apply -f ./deploy.yml
 fi
