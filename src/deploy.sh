@@ -1,4 +1,3 @@
-COMPANY_NAME='sabancidx'
 PROJECT_NAME='oslo'
 
 TAG=v$(date '+%Y%m%d%H%M%S')

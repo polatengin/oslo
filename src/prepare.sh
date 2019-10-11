@@ -1,4 +1,3 @@
-COMPANY_NAME='sabancidx'
 PROJECT_NAME='oslo'
 
 LOGIN_COUNT=`az account list --query 'length([])'`
