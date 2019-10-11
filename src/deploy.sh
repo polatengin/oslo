@@ -34,9 +34,9 @@ docker push $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-product:$TAG
 docker tag ${PROJECT_NAME}-user:$TAG $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-user:$TAG
 docker push $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-user:$TAG
 
-NAMESPACE=`kubectl get namespaces --output json | jq '.items[].metadata' | jq 'select(.name == "$PROJECT_NAME")' | jq --raw-output '.name'`
+NAMESPACE=`kubectl get namespaces --output json | jq -r '.items[].metadata.name' | grep "$PROJECT_NAME"`
 
-if [[ $NAMESPACE -eq '' ]]
+if [ "$NAMESPACE" == '' ]
 then
   kubectl create namespace $PROJECT_NAME
 fi
