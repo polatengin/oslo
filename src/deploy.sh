@@ -17,7 +17,13 @@ ACR_LOGIN_SERVER=`az acr show --name ${PROJECT_NAME}acr --resource-group $PROJEC
 ACR_USERNAME=`az acr show --name ${PROJECT_NAME}acr --resource-group $PROJECT_NAME-rg --query 'name' --output tsv`
 ACR_PASSWORD=`az acr credential show --name ${PROJECT_NAME}acr --query 'passwords[0].value' --output tsv`
 
+DOCKER_LOGGEDIN=`cat ~/.docker/config.json | jq '.auths' | grep "$ACR_LOGIN_SERVER" | sed 's/://' | sed 's/"//g' | sed 's/{//' | tr -d '[:space:]'`
+
+if [ "$DOCKER_LOGGEDIN" == '' ]
+then
+  echo "Loggin-in to Azure Container Registry with Docker"
 docker login $ACR_LOGIN_SERVER --username $ACR_USERNAME --password $ACR_PASSWORD
+fi
 
 docker tag ${PROJECT_NAME}-web:$TAG $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG
 docker push $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG
