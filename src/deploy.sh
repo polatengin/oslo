@@ -88,7 +88,7 @@ fi
 
 INGRESS=`kubectl get ingress --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name'`
 
-if [ $INGRESS == '' ]
+if [ "$INGRESS" == '' ]
 then
   kubectl apply -f ./deploy.yml
 fi
