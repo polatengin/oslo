@@ -31,3 +31,13 @@ kubectl config unset contexts
 kubectl config unset clusters
 
 az aks get-credentials --name $PROJECT_NAME-aks --resource-group $PROJECT_NAME-rg
+
+ACR_LOGIN_SERVER=`az acr show --name ${PROJECT_NAME}acr --resource-group $PROJECT_NAME-rg --query 'loginServer' --output tsv`
+
+DOCKER_LOGGEDIN=`cat ~/.docker/config.json | jq '.auths' | grep "$ACR_LOGIN_SERVER" | sed 's/://' | sed 's/"//g' | sed 's/{//' | tr -d '[:space:]'`
+
+if [ "$DOCKER_LOGGEDIN" == '' ]
+then
+  echo "Logging-in to Azure Container Registry through Docker CLI"
+  az acr login --name ${PROJECT_NAME}acr
+fi
