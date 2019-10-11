@@ -93,5 +93,8 @@ then
   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml
 fi
 
-  kubectl apply -f ./deploy.yml
-fi
+kubectl apply -f ./deploy.yml
+
+APP_URL=http://`kubectl get ingress --all-namespaces --output=json | jq -r '.items[0].status.loadBalancer.ingress[0].ip'`
+
+echo "Click $APP_URL to open the app in browser"
