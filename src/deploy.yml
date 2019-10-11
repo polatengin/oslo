@@ -16,8 +16,8 @@ spec:
       - backend:
           serviceName: oslo-products-service
           servicePort: 80
-        path: /api/products/*
+        path: /api/products/(.*)
       - backend:
           serviceName: oslo-user-service
           servicePort: 80
-        path: /api/user/*
+        path: /api/users/(.*)
