@@ -22,7 +22,7 @@ DOCKER_LOGGEDIN=`cat ~/.docker/config.json | jq '.auths' | grep "$ACR_LOGIN_SERV
 if [ "$DOCKER_LOGGEDIN" == '' ]
 then
   echo "Loggin-in to Azure Container Registry with Docker"
-docker login $ACR_LOGIN_SERVER --username $ACR_USERNAME --password $ACR_PASSWORD
+  docker login $ACR_LOGIN_SERVER --username $ACR_USERNAME --password $ACR_PASSWORD
 fi
 
 docker tag ${PROJECT_NAME}-web:$TAG $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG
@@ -44,14 +44,14 @@ fi
 WEB_DEPLOYMENT=`kubectl get deployments --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-web`
 WEB_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-web-service`
 
-if [ $WEB_DEPLOYMENT == '' ]
+if [ "$WEB_DEPLOYMENT" == '' ]
 then
   kubectl create deployment ${PROJECT_NAME}-web --image=$ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG --namespace=${PROJECT_NAME}
 else
   kubectl set image deployment/${PROJECT_NAME}-web ${PROJECT_NAME}-web=$ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG --namespace=$PROJECT_NAME
 fi
 
-if [ $WEB_SERVICE == '' ]
+if [ "$WEB_SERVICE" == '' ]
 then
   kubectl expose deployment ${PROJECT_NAME}-web --type=ClusterIP --name=${PROJECT_NAME}-web-service --port=80 --namespace=${PROJECT_NAME}
 fi
@@ -59,14 +59,14 @@ fi
 PRODUCT_DEPLOYMENT=`kubectl get deployments --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-product`
 PRODUCT_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-product-service`
 
-if [ $PRODUCT_DEPLOYMENT == '' ]
+if [ "$PRODUCT_DEPLOYMENT" == '' ]
 then
   kubectl create deployment ${PROJECT_NAME}-product --image=$ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-product:$TAG --namespace=${PROJECT_NAME}
 else
   kubectl set image deployment/${PROJECT_NAME}-product ${PROJECT_NAME}-product=$ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-product:$TAG --namespace=$PROJECT_NAME
 fi
 
-if [ $PRODUCT_SERVICE == '' ]
+if [ "$PRODUCT_SERVICE" == '' ]
 then
   kubectl expose deployment ${PROJECT_NAME}-product --type=ClusterIP --name=${PROJECT_NAME}-product-service --port=80 --namespace=${PROJECT_NAME}
 fi
@@ -74,14 +74,14 @@ fi
 USER_DEPLOYMENT=`kubectl get deployments --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-user`
 USER_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-user-service`
 
-if [ $USER_DEPLOYMENT == '' ]
+if [ "$USER_DEPLOYMENT" == '' ]
 then
   kubectl create deployment ${PROJECT_NAME}-user --image=$ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-user:$TAG --namespace=${PROJECT_NAME}
 else
   kubectl set image deployment/${PROJECT_NAME}-user ${PROJECT_NAME}-user=$ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-user:$TAG --namespace=$PROJECT_NAME
 fi
 
-if [ $USER_SERVICE == '' ]
+if [ "$USER_SERVICE" == '' ]
 then
   kubectl expose deployment ${PROJECT_NAME}-user --type=ClusterIP --name=${PROJECT_NAME}-user-service --port=80 --namespace=${PROJECT_NAME}
 fi
