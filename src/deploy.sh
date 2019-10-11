@@ -95,6 +95,10 @@ fi
 
 kubectl apply -f ./deploy.yml
 
-APP_URL=http://`kubectl get ingress --all-namespaces --output=json | jq -r '.items[0].status.loadBalancer.ingress[0].ip'`
-
-echo "Click $APP_URL to open the app in browser"
+APP_URL=''
+while [ -z $APP_URL ]; do
+  echo "Waiting for end point..."
+  APP_URL=`kubectl get ingress --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].status.loadBalancer.ingress[0].ip'`
+  [ -z "$APP_URL" ] && sleep 5
+done
+echo "Click http://$APP_URL to open the app in browser"
