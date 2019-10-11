@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace product_service
 {
@@ -22,29 +21,39 @@ namespace product_service
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-        }
+        public void ConfigureServices(IServiceCollection services) { }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        string[] words = {"lorem", "ipsum", "dolor", "sit", "amet", "consectetuer", "adipiscing", "elit", "sed", "diam", "nonummy", "nibh", "euismod", "tincidunt", "ut", "laoreet", "dolore", "magna", "aliquam", "erat"};
+        Random random = new Random();
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.Map("", builder =>
             {
-                endpoints.MapControllers();
+                builder.Run(async context =>
+                {
+                    var productList = Enumerable.Range(1, random.Next(5, 15)).Select(index => new
+                    {
+                        Date = DateTime.Now.AddDays(index),
+                        Price = (random.NextDouble() * 100).ToString ("0.##"),
+                        StockCount = random.Next(-20, 55),
+                        Name = words[random.Next(words.Length)],
+                        IconUrl = "https://picsum.photos/200" + (random.NextDouble() > 0.5 ? "?grayscale" : "")
+                    });
+
+                    await JsonSerializer.SerializeAsync(context.Response.Body, productList);
+                });
             });
         }
     }
