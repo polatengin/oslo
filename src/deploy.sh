@@ -44,7 +44,7 @@ then
 fi
 
 PRODUCT_DEPLOYMENT=`kubectl get deployments --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-product`
-PRODUCT_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-product-service`
+PRODUCT_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-products-service`
 
 if [ "$PRODUCT_DEPLOYMENT" == '' ]
 then
@@ -55,11 +55,11 @@ fi
 
 if [ "$PRODUCT_SERVICE" == '' ]
 then
-  kubectl expose deployment ${PROJECT_NAME}-product --type=ClusterIP --name=${PROJECT_NAME}-product-service --port=80 --namespace=${PROJECT_NAME}
+  kubectl expose deployment ${PROJECT_NAME}-product --type=ClusterIP --name=${PROJECT_NAME}-products-service --port=80 --namespace=${PROJECT_NAME}
 fi
 
 USER_DEPLOYMENT=`kubectl get deployments --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-user`
-USER_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-user-service`
+USER_SERVICE=`kubectl get services --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name' | grep ${PROJECT_NAME}-users-service`
 
 if [ "$USER_DEPLOYMENT" == '' ]
 then
@@ -70,7 +70,7 @@ fi
 
 if [ "$USER_SERVICE" == '' ]
 then
-  kubectl expose deployment ${PROJECT_NAME}-user --type=ClusterIP --name=${PROJECT_NAME}-user-service --port=80 --namespace=${PROJECT_NAME}
+  kubectl expose deployment ${PROJECT_NAME}-user --type=ClusterIP --name=${PROJECT_NAME}-users-service --port=80 --namespace=${PROJECT_NAME}
 fi
 
 INGRESS=`kubectl get ingress --namespace=${PROJECT_NAME} --output=json | jq -r '.items[].metadata.name'`
