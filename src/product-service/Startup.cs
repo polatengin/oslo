@@ -49,7 +49,7 @@ namespace product_service
                         Price = (random.NextDouble() * 100).ToString ("0.##"),
                         StockCount = random.Next(-20, 55),
                         Name = words[random.Next(words.Length)],
-                        IconUrl = "https://picsum.photos/200" + (random.NextDouble() > 0.5 ? "?grayscale" : "")
+                        IconUrl = "https://picsum.photos/50" + (random.NextDouble() > 0.5 ? "?grayscale" : "?color") + "&" + random.Next(1, 1000)
                     });
 
                     await JsonSerializer.SerializeAsync(context.Response.Body, productList);
