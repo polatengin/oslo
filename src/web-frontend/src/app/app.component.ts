@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,12 @@ import { Component } from '@angular/core';
         <a routerLink="/" class="btn btn-link">About</a>
         <a routerLink="/products" class="btn btn-link">Products</a>
         <a routerLink="/users" class="btn btn-link">Users</a>
-    </div>
+      </div>
     </header>
     <router-outlet></router-outlet>
   `,
   styles: []
 })
 export class AppComponent {
-  title = 'web-frontend';
+  version = environment.version;
 }
