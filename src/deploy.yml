@@ -12,14 +12,14 @@ spec:
   - http:
       paths:
       - backend:
-          serviceName: oslo-web-service
-          servicePort: 80
-        path: /(.*)
-      - backend:
           serviceName: oslo-products-service
           servicePort: 80
-        path: /api/products/(/|$)(.*)
+        path: /api/products(/|$)(.*)
       - backend:
           serviceName: oslo-users-service
           servicePort: 80
-        path: /api/users/(/|$)(.*)
+        path: /api/users(/|$)(.*)
+      - backend:
+          serviceName: oslo-web-service
+          servicePort: 80
+        path: /(.*)
