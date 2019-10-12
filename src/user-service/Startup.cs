@@ -46,7 +46,7 @@ namespace user_service
                         BirthDate = DateTime.Now.AddDays(index),
                         Salary = ((random.NextDouble() * 100000) + 50000).ToString ("0.##"),
                         Name = words[random.Next(words.Length)] + " " + words[random.Next(words.Length)],
-                        ProfilePictureUrl = "https://i.pravatar.cc/200"
+                        ProfilePictureUrl = "https://i.pravatar.cc/50?" + random.Next(1, 1000)
                     });
 
                     await JsonSerializer.SerializeAsync(context.Response.Body, userList);
