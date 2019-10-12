@@ -1,0 +1,18 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Salary</th>
+      <th>Birth Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of userList | async">
+      <td><img [src]="user.ProfilePictureUrl" /></td>
+      <td>{{ user.Name }}</td>
+      <td>${{ user.Salary }}</td>
+      <td>{{ user.BirthDate | date }}</td>
+    </tr>
+  </tbody>
+</table>
