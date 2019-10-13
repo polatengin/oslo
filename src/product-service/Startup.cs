@@ -39,6 +39,23 @@ namespace product_service
 
             app.UseHttpsRedirection();
 
+            app.Map("/random", builder =>
+            {
+                builder.Run(async context =>
+                {
+                    var product = new
+                    {
+                        Date = DateTime.Now.AddDays(random.Next(-10, 10)),
+                        Price = (random.NextDouble() * 100).ToString ("0.##"),
+                        StockCount = random.Next(-20, 55),
+                        Name = words[random.Next(words.Length)],
+                        IconUrl = "https://picsum.photos/350" + (random.NextDouble() > 0.5 ? "?grayscale" : "?color") + "&" + random.Next(1, 1000)
+                    };
+
+                    await JsonSerializer.SerializeAsync(context.Response.Body, product);
+                });
+            });
+
             app.Map("", builder =>
             {
                 builder.Run(async context =>
@@ -53,23 +70,6 @@ namespace product_service
                     });
 
                     await JsonSerializer.SerializeAsync(context.Response.Body, productList);
-                });
-            });
-
-            app.Map("random", builder =>
-            {
-                builder.Run(async context =>
-                {
-                    var product = new
-                    {
-                        Date = DateTime.Now.AddDays(index),
-                        Price = (random.NextDouble() * 100).ToString ("0.##"),
-                        StockCount = random.Next(-20, 55),
-                        Name = words[random.Next(words.Length)],
-                        IconUrl = "https://picsum.photos/350" + (random.NextDouble() > 0.5 ? "?grayscale" : "?color") + "&" + random.Next(1, 1000)
-                    });
-
-                    await JsonSerializer.SerializeAsync(context.Response.Body, product);
                 });
             });
         }
