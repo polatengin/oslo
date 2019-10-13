@@ -2,29 +2,33 @@ PROJECT_NAME='oslo'
 
 TAG=v$(date '+%Y%m%d%H%M%S')
 
-echo $TAG
+echo "New tag is : $TAG"
 
-docker build -t ${PROJECT_NAME}-web:$TAG ./web-frontend/
-
-docker build -t ${PROJECT_NAME}-product:$TAG ./product-service/
-
-docker build -t ${PROJECT_NAME}-user:$TAG ./user-service/
+echo "Getting Azure Container Registry Login Server..."
 
 ACR_LOGIN_SERVER=`az acr show --name ${PROJECT_NAME}acr --resource-group $PROJECT_NAME-rg --query 'loginServer' --output tsv`
 
+echo "WebFrontEnd project is started to compile, docker build, docker tag and push to the Azure Container Registry..."
+docker build -t ${PROJECT_NAME}-web:$TAG ./web-frontend/
 docker tag ${PROJECT_NAME}-web:$TAG $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG
 docker push $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-web:$TAG
 
+echo "ProductAPIService project is started to compile, docker build, docker tag and push to the Azure Container Registry..."
+docker build -t ${PROJECT_NAME}-product:$TAG ./product-service/
 docker tag ${PROJECT_NAME}-product:$TAG $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-product:$TAG
 docker push $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-product:$TAG
 
+echo "UserAPIService project is started to compile, docker build, docker tag and push to the Azure Container Registry..."
+docker build -t ${PROJECT_NAME}-user:$TAG ./user-service/
 docker tag ${PROJECT_NAME}-user:$TAG $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-user:$TAG
 docker push $ACR_LOGIN_SERVER/${PROJECT_NAME}/${PROJECT_NAME}-user:$TAG
 
+echo "Checking if project namespace is exists on Azure Kubernetes Service..."
 NAMESPACE=`kubectl get namespaces --output json | jq -r '.items[].metadata.name' | grep "$PROJECT_NAME"`
 
 if [ "$NAMESPACE" == '' ]
 then
+  echo "Creating namespace on Azure Kubernetes Service..."
   kubectl create namespace $PROJECT_NAME
 fi
 
