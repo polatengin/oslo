@@ -6,6 +6,7 @@
       <th>Price</th>
       <th>Stock Count</th>
       <th>Date</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +15,7 @@
       <td>{{ product.Name }}</td>
       <td>${{ product.Price | number:'4.5-5' }}</td>
       <td>{{ product.StockCount }}</td>
-      <td>{{ product.Date | date }}</td>
+      <td><a routerLink="/product/detail">Details</a></td>
     </tr>
   </tbody>
 </table>
