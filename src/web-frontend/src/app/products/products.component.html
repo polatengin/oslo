@@ -13,8 +13,9 @@
     <tr *ngFor="let product of productList | async">
       <td><img [src]="product.IconUrl" /></td>
       <td>{{ product.Name }}</td>
-      <td>${{ product.Price | number:'4.5-5' }}</td>
+      <td>${{ product.Price | number:'1.1-2' }}</td>
       <td>{{ product.StockCount }}</td>
+      <td>{{ product.Date | date:'yyyy-MM-dd HH:mm:ss' }}</td>
       <td><a routerLink="/product/detail">Details</a></td>
     </tr>
   </tbody>
