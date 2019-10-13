@@ -1,0 +1,36 @@
+<div class="panel" *ngIf="product">
+  <div class="panel-header text-center">
+    <figure class="avatar avatar-xl"><img [src]="product.IconUrl" alt="Product Image"></figure>
+    <div class="panel-title h5 mt-10">{{ product.Name }}</div>
+    <div class="panel-subtitle">Super Product!</div>
+  </div>
+  <div class="panel-body">
+    <div class="tile tile-centered">
+      <div class="tile-content">
+        <div class="tile-title text-bold">Name</div>
+        <div class="tile-subtitle">{{ product.Name }}</div>
+      </div>
+    </div>
+    <div class="tile tile-centered">
+      <div class="tile-content">
+        <div class="tile-title text-bold">Price</div>
+        <div class="tile-subtitle">{{ product.Price | number:'1.1-2' }}</div>
+      </div>
+    </div>
+    <div class="tile tile-centered">
+      <div class="tile-content">
+        <div class="tile-title text-bold">Stock Count</div>
+        <div class="tile-subtitle">{{ product.StockCount }}</div>
+      </div>
+    </div>
+    <div class="tile tile-centered">
+      <div class="tile-content">
+        <div class="tile-title text-bold">Date</div>
+        <div class="tile-subtitle">{{ product.Date | date:'yyyy-MM-dd HH:mm:ss' }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-link" routerLink="/products">Go back to list</button>
+  </div>
+</div>
