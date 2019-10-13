@@ -14,7 +14,7 @@ export class ProductsComponent implements OnInit {
   productList: Observable<any[]>;
 
   ngOnInit() {
-    this.productList = this.http.get<any[]>('/api/products/')
+    this.productList = this.http.get<any[]>('/api/products/');
   }
 
 }
