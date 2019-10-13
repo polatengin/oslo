@@ -6,6 +6,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
@@ -14,11 +15,11 @@ spec:
       - backend:
           serviceName: oslo-products-service
           servicePort: 80
-        path: /api/products(/|$)(.*)
+        path: /api/products/(.*)
       - backend:
           serviceName: oslo-users-service
           servicePort: 80
-        path: /api/users(/|$)(.*)
+        path: /api/users/(.*)
       - backend:
           serviceName: oslo-web-service
           servicePort: 80
