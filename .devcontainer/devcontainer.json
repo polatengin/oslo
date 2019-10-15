@@ -10,6 +10,7 @@
     },
     "extensions": [
         "ms-vscode.csharp",
+        "ms-python.python",
         "ms-azuretools.vscode-docker",
         "editorconfig.editorconfig",
         "vscode-icons-team.vscode-icons"
