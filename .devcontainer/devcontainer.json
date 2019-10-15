@@ -12,6 +12,6 @@
         "ms-vscode.csharp",
         "ms-azuretools.vscode-docker",
         "editorconfig.editorconfig",
-        "vscode-icons"
+        "vscode-icons-team.vscode-icons"
     ]
 }
