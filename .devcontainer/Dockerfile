@@ -61,6 +61,9 @@ RUN apt-get update \
     && unzip terraform_${CURR_VER}_linux_amd64.zip -d /usr/local/bin/ \
     && rm -rf terraform_${CURR_VER}_linux_amd64.zip \
     #
+    # Install pip and pylint
+    && apt-get install -y python3-pip pylint \
+    #
     # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
