@@ -6,6 +6,7 @@
     ],
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
+        "workbench.iconTheme": "vscode-icons",
         "python.pythonPath": "/usr/bin/python3",
         "python.linting.enabled": true,
         "python.linting.pylintEnabled": true,
