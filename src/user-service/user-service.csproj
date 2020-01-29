@@ -5,7 +5,4 @@
     <RootNamespace>user_service</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>
