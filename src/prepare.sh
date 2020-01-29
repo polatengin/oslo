@@ -21,7 +21,7 @@ ACR_ID=`az acr show --name ${PROJECT_NAME}acr --resource-group $PROJECT_NAME-rg 
 
 echo 'Creating Azure Kubernetes Service...'
 
-az aks create --name $PROJECT_NAME-aks --resource-group $PROJECT_NAME-rg --attach-acr $ACR_ID --kubernetes-version 1.14.6 --no-ssh-key
+az aks create --name $PROJECT_NAME-aks --resource-group $PROJECT_NAME-rg --attach-acr $ACR_ID --kubernetes-version 1.16.4 --no-ssh-key
 
 echo 'Setting Azure Kubernetes Service Credentials...'
 
