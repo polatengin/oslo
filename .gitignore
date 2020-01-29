@@ -2,5 +2,6 @@ bin/
 obj/
 node_modules/
 Properties/
+dist/
 
 package-lock.json
