@@ -5,7 +5,4 @@
     <RootNamespace>product_service</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>
