@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -24,16 +24,6 @@ RUN apt-get update \
     # Install Docker Compose
     && curl -sSL "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose \
-    #
-    # Install .Net Core
-    && wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg \
-    && mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/ \
-    && wget -q https://packages.microsoft.com/config/debian/10/prod.list \
-    && mv prod.list /etc/apt/sources.list.d/microsoft-prod.list \
-    && chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg \
-    && chown root:root /etc/apt/sources.list.d/microsoft-prod.list \
-    && apt-get update \
-    && apt-get -y install dotnet-sdk-3.0 \
     #
     # Install Node
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
